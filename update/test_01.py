@@ -52,7 +52,7 @@ Lab = Laf = 50
 
 # Squats for the robot - Depending upon link lengths
 
-def knee_motion(k):
+def knee_motion(k,direction):
 	knee_angle_rad = (math.pi * k)/180
 	p_rad = math.pi/2 - math.atan((Lth - Lsh*math.cos(knee_angle_rad))/Lsh*math.sin(knee_angle_rad))
 	p = p_rad * 180 /math.pi
@@ -75,7 +75,7 @@ def knee_motion(k):
 	data[0], data[6] = motion.right_knee_pitch(k, current_angle[2])
 	data[1], data[7] = motion.left_knee_pitch(180-k, current_angle[8])
 	data[2], data[8] = motion.right_hip_pitch(p, current_angle[3])
-	data[3], data[9] = motion.left_hip_pitch(p, current_angle[9])
+	data[3], data[9] = motion.left_hip_pitch(90+(90-p), current_angle[9])
 	data[4], data[10] = motion.right_ankle_pitch(q, current_angle[1])
 	data[5], data[11] = motion.left_ankle_pitch(q, current_angle[7])
 	# Setting one arbitrary value to maximum and finding out the maximum range of the pwm values
@@ -91,7 +91,7 @@ def knee_motion(k):
 
 	for i in range(0,6):
 		rate[i] =  2 * data[i] / max_range
-	if k<0:
+	if direction<0:
 		for i in range(0,6):
 			rate[i]=-rate[i]
 	# Motion start Notification
@@ -148,7 +148,7 @@ def knee_motion(k):
 		current_angle[2] = k
 		current_angle[8] = 180-k
 		current_angle[3] = p
-		current_angle[9] = p
+		current_angle[9] = 90+(90-p)
 		current_angle[1] = q
 		current_angle[7] = q
 #----------------------------------------------------------------------
@@ -270,9 +270,12 @@ def turn_left_right_(angle_c, direction):
 	
 init_stand()
 time.sleep(1)
-#knee_motion(90)
-turn_left_right_(15,'right')
-time.sleep(1)
+#knee_motion(90,1)
+#time.sleep(1)
+#knee.motion(0,-1)
+#time.sleep(1)
+#turn_left_right_(15,'right')
+#time.sleep(1)
 #turn_left_right_(15,'left')
 #time.sleep(1)
 for i in range(0,16):
