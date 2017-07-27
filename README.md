@@ -1,2 +1,3 @@
 # biped
-All the codes related to the biped project
+
+A lower-body walking biped robot - Motion sequence generators
